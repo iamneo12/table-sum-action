@@ -1,0 +1,26 @@
+name: Scrape Table Sums
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+
+jobs:
+  scrape:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install Playwright and dependencies (24f2008801@ds.study.iitm.ac.in)
+        run: |
+          pip install playwright
+          playwright install --with-deps chromium
+
+      - name: Run scraper and print total
+        run: python scrape.py
